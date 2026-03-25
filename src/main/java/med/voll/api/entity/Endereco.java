@@ -1,17 +1,14 @@
 package med.voll.api.entity;
 
-import endereco.DadosEndereco;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import med.voll.api.endereco.DadosEndereco;
 
 @Embeddable
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-
 public class Endereco {
+	protected Endereco() {}
+
 	public Endereco(DadosEndereco endereco) {
 		this.logradouro = endereco.logradouro();
 		this.bairro = endereco.bairro();
@@ -21,6 +18,7 @@ public class Endereco {
 		this.complemento = endereco.complemento();
 		this.numero = endereco.numero();
 	}
+
 	String logradouro;
 	String bairro;
 	String cep;
