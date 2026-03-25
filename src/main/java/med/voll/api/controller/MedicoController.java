@@ -1,21 +1,14 @@
 package med.voll.api.controller;
 
-import java.util.List;
-
+import med.voll.api.entity.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import med.voll.api.entity.DadosCadastroMedico;
-import med.voll.api.entity.DadosListagemMedico;
-import med.voll.api.entity.Medico;
 import med.voll.api.repository.MedicoRepository;
 
 @RestController
@@ -32,8 +25,25 @@ public class MedicoController {
     }
     
     @GetMapping
-    public Page<DadosListagemMedico> listar(Pageable paginacao) {
-    	return repository.findAll(paginacao).map(DadosListagemMedico::new);    
+    public ResponseEntity<Page<DadosListagemMedico>> listar(Pageable paginacao) {
+        var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
+        return ResponseEntity.ok(page);
     	}
+    
+    @PutMapping
+    @Transactional
+    public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
+    	var medico = repository.getReferenceById(dados.id());
+    	medico.atualizarInformacoes(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
+    }
+    
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ResponseBody> excluir(@PathVariable Long id) {
+    	var medico = repository.getReferenceById(id);
+    	medico.excluir();
+        return ResponseEntity.noContent().build();
+    }
 
 }

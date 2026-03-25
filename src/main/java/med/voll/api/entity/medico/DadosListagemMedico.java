@@ -1,4 +1,4 @@
-package med.voll.api.entity;
+package med.voll.api.entity.medico;
 
 public record DadosListagemMedico(Long id, String nome, String email, String crm, Especialidade especialidade) {
 	public DadosListagemMedico(Medico medico) {

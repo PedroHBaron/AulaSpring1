@@ -1,4 +1,4 @@
-package med.voll.api.endereco;
+package med.voll.api.entity.endereco;
 
 import jakarta.validation.constraints.*;
 

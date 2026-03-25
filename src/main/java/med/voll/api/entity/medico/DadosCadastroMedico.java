@@ -1,8 +1,8 @@
-package med.voll.api.entity;
+package med.voll.api.entity.medico;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import med.voll.api.endereco.DadosEndereco;
+import med.voll.api.entity.endereco.DadosEndereco;
 
 public record DadosCadastroMedico(
 		@NotBlank
@@ -18,7 +18,7 @@ public record DadosCadastroMedico(
 		@Pattern(regexp = "\\d{4,6}")
 		String crm,
 		@NotNull
-		Especialidade especialidade,
+        Especialidade especialidade,
 		@NotNull
 		@Valid
 		DadosEndereco endereco) {
